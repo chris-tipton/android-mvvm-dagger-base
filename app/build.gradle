@@ -1,0 +1,168 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-platform-android'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId "com.tiptop.androidbase"
+        minSdkVersion 23
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+        }
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix "-debug"
+            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+}
+
+kapt {
+    mapDiagnosticLocations = true
+}
+
+androidExtensions {
+    experimental = true
+}
+
+ext {
+    androidTestVersion = '1.1.0-beta02'
+    androidThreeTenVersion = '1.1.0'
+    animatedVectorDrawableVersion = '1.0.0'
+    ankoLibVersion = '0.10.7'
+    appCompatVersion = '1.0.0'
+    browserVersion = '1.0.0'
+    cardViewVersion = '1.0.0'
+    constraintLayoutVersion = '2.0.0-alpha2'
+    coreTestingVersion = '2.0.0'
+    daggerVersion = '2.18'
+    dynamicAnimationVersion = '1.0.0'
+    espressoVersion = '3.1.0-beta02'
+    exifInterfaceVersion = '1.0.0'
+    firebaseAuthVersion = '16.0.5'
+    firebaseCoreVersion = '16.0.4'
+    firebaseMessagingVersion = '17.3.4'
+    firebaseUiVersion = '4.1.0'
+    firestoreVersion = '17.1.1'
+    junitVersion = '4.12'
+    legacySupportVersion = '1.0.0'
+    lifecycleExtensionsVersion = '2.0.0'
+    materialVersion = '1.0.0'
+    mockitoVersion = '2.+'
+    mockitoKotlinVersion = '1.5.0'
+    okHttpVersion = '3.11.0'
+    playServicesAuthVersion = '16.0.1'
+    recyclerViewVersion = '1.0.0'
+    retrofitVersion = '2.4.0'
+    robolectricVersion = '3.6.1'
+    rxAndroidVersion = '2.1.0'
+    rxJavaVersion = '2.2.2'
+    rxKotlinVersion = '2.3.0'
+    timberVersion = '4.7.1'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.vectordrawable:vectordrawable-animated:$animatedVectorDrawableVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.cardview:cardview:$cardViewVersion"
+    implementation "androidx.browser:browser:$browserVersion"
+    implementation "androidx.exifinterface:exifinterface:$exifInterfaceVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.legacy:legacy-support-v4:$legacySupportVersion"
+    implementation "androidx.dynamicanimation:dynamicanimation:$dynamicAnimationVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // testing dependencies
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
+    testImplementation "com.nhaarman:mockito-kotlin:$mockitoKotlinVersion"
+    testImplementation "androidx.arch.core:core-testing:$coreTestingVersion"
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation("org.threeten:threetenbp:$androidThreeTenVersion") {
+        exclude group: 'com.jakewharton.threetenabp', module: 'threetenabp'
+    }
+    androidTestImplementation "androidx.test:runner:$androidTestVersion"
+    androidTestImplementation "androidx.test:rules:$androidTestVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-web:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso.idling:idling-concurrent:$espressoVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+    androidTestImplementation("androidx.test.espresso:espresso-core:$espressoVersion", {
+        exclude group: "com.android.support", module: "support-annotations"
+    })
+
+    //Android Architecture Components
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion"
+
+    //Play Services
+    implementation "com.google.android.gms:play-services-auth:$playServicesAuthVersion"
+
+    //Firebase
+    implementation "com.google.firebase:firebase-auth:$firebaseAuthVersion"
+    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    implementation "com.firebaseui:firebase-ui-auth:$firebaseUiVersion"
+    implementation "com.google.firebase:firebase-firestore:$firestoreVersion"
+    implementation "com.google.firebase:firebase-messaging:$firebaseMessagingVersion"
+
+    //Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+
+    //RxJava
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    //Other
+    implementation "org.jetbrains.anko:anko:$ankoLibVersion"
+    implementation "org.jetbrains.anko:anko-design:$ankoLibVersion"
+    implementation "org.jetbrains.anko:anko-appcompat-v7-commons:$ankoLibVersion"
+    implementation "org.jetbrains.anko:anko-cardview-v7:$ankoLibVersion"
+    implementation "org.jetbrains.anko:anko-recyclerview-v7:$ankoLibVersion"
+    implementation "org.jetbrains.anko:anko-support-v4-commons:$ankoLibVersion"
+    implementation "com.jakewharton.threetenabp:threetenabp:$androidThreeTenVersion"
+    implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+}
